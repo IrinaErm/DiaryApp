@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ui.details_screen.DetailsFragment"
+    android:padding="@dimen/details_screen_padding">
+
+    <TextView
+        android:id="@+id/event_name"
+        style="@style/EventInfoTitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Event" />
+
+    <TextView
+        android:id="@+id/event_start_time_label"
+        style="@style/EventInfoLabelTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_name" />
+
+    <TextView
+        android:id="@+id/event_start_time"
+        style="@style/EventInfoTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/event_start_time_label"
+        app:layout_constraintStart_toEndOf="@id/event_start_time_label"
+        tools:text="27.11.2022 18:00" />
+
+    <TextView
+        android:id="@+id/event_finish_time_label"
+        style="@style/EventInfoLabelTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/finish_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_start_time_label" />
+
+    <TextView
+        android:id="@+id/event_finish_time"
+        style="@style/EventInfoTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/event_finish_time_label"
+        app:layout_constraintStart_toEndOf="@id/event_finish_time_label"
+        tools:text="27.11.2022 19:00" />
+
+    <TextView
+        android:id="@+id/event_description"
+        style="@style/EventInfoTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/event_details_view_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_finish_time"
+        app:layout_constraintBottom_toTopOf="@id/close_btn"
+        android:layout_marginTop="@dimen/event_details_view_margin"
+        android:layout_marginBottom="@dimen/event_details_view_margin"
+        tools:text="Description"/>
+
+    <Button
+        android:id="@+id/close_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/close"
+        android:backgroundTint="@color/cancel_btn"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
