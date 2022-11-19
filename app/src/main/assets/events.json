@@ -1,0 +1,23 @@
+[
+  {
+    "id": 0,
+    "date_start":"1669219200000",
+    "date_finish":"1669219200000",
+    "name":"Изучение истории мемологии",
+    "description":"Обсуждения происхождения мема 'It is Wednesday, my dudes'"
+  },
+  {
+    "id": 1,
+    "date_start":"1669395600000",
+    "date_finish":"1669406400000",
+    "name":"Празднование пятницы",
+    "description":"Не нуждается в представлении"
+  },
+  {
+    "id": 2,
+    "date_start":"1669561200000",
+    "date_finish":"1669564800000",
+    "name":"Mobile-практикум",
+    "description":"Hopefully..."
+  }
+]

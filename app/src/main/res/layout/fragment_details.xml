@@ -58,13 +58,13 @@
         android:id="@+id/event_description"
         style="@style/EventInfoTextStyle"
         android:layout_width="0dp"
-        android:layout_height="@dimen/event_details_view_height"
+        android:layout_height="@dimen/event_description_height"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/event_finish_time"
         app:layout_constraintBottom_toTopOf="@id/close_btn"
-        android:layout_marginTop="@dimen/event_details_view_margin"
-        android:layout_marginBottom="@dimen/event_details_view_margin"
+        android:layout_marginTop="@dimen/event_description_margin"
+        android:layout_marginBottom="@dimen/event_description_margin"
         tools:text="Description"/>
 
     <Button

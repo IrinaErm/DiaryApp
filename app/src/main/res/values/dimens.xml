@@ -2,14 +2,16 @@
 <resources>
     <dimen name="main_screen_padding">8dp</dimen>
     <dimen name="details_screen_padding">16dp</dimen>
+    <dimen name="add_event_screen_padding">16dp</dimen>
 
     <dimen name="btn_margin">8dp</dimen>
     <dimen name="cardview_margin">6dp</dimen>
 
+    <dimen name="events_list_padding">16dp</dimen>
     <dimen name="events_list_item_padding">8dp</dimen>
     <dimen name="event_info_textsize">14sp</dimen>
     <dimen name="event_info_title_textsize">23sp</dimen>
 
-    <dimen name="event_details_view_height">100dp</dimen>
-    <dimen name="event_details_view_margin">16dp</dimen>
+    <dimen name="event_description_height">100dp</dimen>
+    <dimen name="event_description_margin">16dp</dimen>
 </resources>

@@ -1,0 +1,16 @@
+package com.ermilova.android.diary.data.room
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface EventDao {
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(eventEntity: EventEntity)
+
+    @Query("SELECT * FROM event WHERE start_time BETWEEN :startTime and :finishTime")
+    fun getAllByTime(startTime: Long, finishTime: Long): Flow<List<EventEntity>?>
+}

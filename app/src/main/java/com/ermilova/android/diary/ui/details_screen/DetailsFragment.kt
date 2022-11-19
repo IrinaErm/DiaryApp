@@ -4,17 +4,37 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import com.ermilova.android.diary.R
+import androidx.navigation.fragment.findNavController
+import com.ermilova.android.diary.databinding.FragmentDetailsBinding
 
 class DetailsFragment : DialogFragment() {
+
+    private lateinit var binding: FragmentDetailsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false)
+        binding = FragmentDetailsBinding.inflate(inflater, container, false)
+
+        val bundle = arguments
+        bundle?.let {
+            val args = DetailsFragmentArgs.fromBundle(bundle)
+            binding.eventName.text = args.eventId.toString()
+        }
+
+        binding.closeBtn.setOnClickListener() {
+            findNavController().navigateUp()
+        }
+
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
 }

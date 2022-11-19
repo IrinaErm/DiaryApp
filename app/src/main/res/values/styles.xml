@@ -15,4 +15,9 @@
         <item name="android:paddingEnd">8dp</item>
         <item name="android:textColor">@color/label_text</item>
     </style>
+
+    <style name="AddEventTitleTextStyle" parent="EventInfoTextStyle">
+        <item name="android:textColor">@color/label_text</item>
+        <item name="android:textSize">@dimen/event_info_title_textsize</item>
+    </style>
 </resources>
