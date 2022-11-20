@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e45b2500da02cfdb8d51f50b46312bf0",
+    "identityHash": "e4435cb614cf31b79ac6825f7376956b",
     "entities": [
       {
-        "tableName": "event",
+        "tableName": "events",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `name` TEXT NOT NULL, `start_time` INTEGER NOT NULL, `finish_time` INTEGER NOT NULL, `description` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -52,7 +52,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e45b2500da02cfdb8d51f50b46312bf0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e4435cb614cf31b79ac6825f7376956b')"
     ]
   }
 }

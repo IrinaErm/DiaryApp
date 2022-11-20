@@ -9,8 +9,8 @@
 
     <dimen name="events_list_padding">16dp</dimen>
     <dimen name="events_list_item_padding">8dp</dimen>
-    <dimen name="event_info_textsize">14sp</dimen>
-    <dimen name="event_info_title_textsize">23sp</dimen>
+    <dimen name="event_info_textsize">9sp</dimen>
+    <dimen name="event_info_title_textsize">15sp</dimen>
 
     <dimen name="event_description_height">100dp</dimen>
     <dimen name="event_description_margin">16dp</dimen>

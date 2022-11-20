@@ -32,11 +32,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
         initDB()
     }
 
-    fun initDB() {
+    private fun initDB() {
         val gson = Gson()
         val json: String = try {
             val inputStream: InputStream = requireNotNull(applicationContext).assets.open(jsonFile)

@@ -11,6 +11,9 @@ interface EventDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(eventEntity: EventEntity)
 
-    @Query("SELECT * FROM event WHERE start_time BETWEEN :startTime and :finishTime")
+    @Query("SELECT * FROM events WHERE start_time BETWEEN :startTime and :finishTime")
     fun getAllByTime(startTime: Long, finishTime: Long): Flow<List<EventEntity>?>
+
+    @Query("SELECT * FROM events WHERE id = :eventId")
+    fun getEventById(eventId: Long) : Flow<EventEntity>
 }

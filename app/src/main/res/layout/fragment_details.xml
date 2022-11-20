@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.details_screen.DetailsFragment"
+    tools:context=".ui.details_screen.DetailsScreenFragment"
     android:padding="@dimen/details_screen_padding">
 
     <TextView

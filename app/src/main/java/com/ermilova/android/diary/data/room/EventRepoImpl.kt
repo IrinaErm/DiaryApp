@@ -21,4 +21,10 @@ class EventRepoImpl(private val localDataSource: EventLocalDataSource) : EventRe
             }
         }
     }
+
+    override fun getEventById(eventId: Long): Flow<EventModel> {
+        return localDataSource.getEventById(eventId).map { entity ->
+            entity.toModel()
+        }
+    }
 }

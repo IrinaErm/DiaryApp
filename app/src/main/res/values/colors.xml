@@ -65,4 +65,5 @@
     <color name="black">#000000</color>
     <color name="label_text">#414942</color>
     <color name="cancel_btn">#8B938A</color>
+    <color name="table_divider">#414942</color>
 </resources>

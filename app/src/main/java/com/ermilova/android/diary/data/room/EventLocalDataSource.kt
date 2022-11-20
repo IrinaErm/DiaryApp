@@ -10,4 +10,8 @@ class EventLocalDataSource(private val eventDao: EventDao) {
     fun getEventsByTime(startTime: Long, finishTime: Long): Flow<List<EventEntity>?> {
         return eventDao.getAllByTime(startTime, finishTime)
     }
+
+    fun getEventById(eventId: Long) : Flow<EventEntity> {
+        return eventDao.getEventById(eventId)
+    }
 }
