@@ -1,23 +1,79 @@
 [
   {
     "id": 0,
-    "date_start":"1669219200000",
-    "date_finish":"1669219200000",
+    "date_start":"1669170600000",
+    "date_finish":"1669172400000",
     "name":"Изучение истории мемологии",
     "description":"Обсуждение происхождения мема 'It is Wednesday, my dudes'."
   },
   {
     "id": 1,
-    "date_start":"1669395600000",
-    "date_finish":"1669406400000",
+    "date_start":"1669269600000",
+    "date_finish":"1669281600000",
     "name":"Празднование пятницы",
     "description":"Не нуждается в представлении."
   },
   {
     "id": 2,
-    "date_start":"1669561200000",
-    "date_finish":"1669564800000",
-    "name":"Mobile-практикум",
-    "description":"Hopefully..."
+    "date_start":"1669414800000",
+    "date_finish":"1669416000000",
+    "name":"Отдыхаем",
+    "description":"Активно!"
+  },
+  {
+    "id": 3,
+    "date_start":"1669417200000",
+    "date_finish":"1669428000000",
+    "name":"Пьем...",
+    "description":"кефир."
+  },
+  {
+    "id": 4,
+    "date_start":"1669417200000",
+    "date_finish":"1669428000000",
+    "name":"Генерируем идеи",
+    "description":"Помогите."
+  },
+  {
+    "id": 5,
+    "date_start":"1669526400000",
+    "date_finish":"1669526460000",
+    "name":"Тренировка силы воли",
+    "description":"Делаем лабы по моделированию."
+  },
+  {
+    "id": 6,
+    "date_start":"1669263000000",
+    "date_finish":"1669266000000",
+    "name":"Концерт",
+    "description":"В душе."
+  },
+  {
+    "id": 7,
+    "date_start":"1669327200000",
+    "date_finish":"1669337700000",
+    "name":"Книжный клуб",
+    "description":"Читаем новости и плачем."
+  },
+  {
+    "id": 8,
+    "date_start":"1669510500000",
+    "date_finish":"1669510800000",
+    "name":"Бокс",
+    "description":""
+  },
+  {
+    "id": 9,
+    "date_start":"1669510800000",
+    "date_finish":"1669514400000",
+    "name":"Учеба",
+    "description":""
+  },
+  {
+    "id": 10,
+    "date_start":"1669575600000",
+    "date_finish":"1669581000000",
+    "name":"Обед",
+    "description":"По расписанию."
   }
 ]

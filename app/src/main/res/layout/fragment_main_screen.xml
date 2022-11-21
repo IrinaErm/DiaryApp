@@ -47,8 +47,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:divider="@color/table_divider"
             android:showDividers="middle"
-            android:paddingStart="@dimen/events_list_padding"
-            android:paddingEnd="@dimen/events_list_padding"/>
+            android:layout_margin="@dimen/event_table_margin"/>
 
     </androidx.core.widget.NestedScrollView>
 

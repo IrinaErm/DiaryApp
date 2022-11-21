@@ -31,6 +31,7 @@ class MainScreenFragment : Fragment() {
         binding = FragmentMainScreenBinding.inflate(layoutInflater, container, false)
 
         drawTable()
+        getEvents(binding.calendar.date)
 
         return binding.root
     }
@@ -44,6 +45,10 @@ class MainScreenFragment : Fragment() {
                 calendar.set(Calendar.YEAR, year)
                 calendar.set(Calendar.MONTH, month)
                 calendar.set(Calendar.DAY_OF_MONTH, day)
+                calendar.set(Calendar.HOUR_OF_DAY, 0)
+                calendar.set(Calendar.MINUTE, 0)
+                calendar.set(Calendar.SECOND, 0)
+                calendar.set(Calendar.MILLISECOND, 0)
                 val startTime = calendar.timeInMillis
 
                 getEvents(startTime)
@@ -52,9 +57,7 @@ class MainScreenFragment : Fragment() {
 
     private fun drawTable() {
         val timeFormat = "%d:%02d\n%d:%02d"
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        var hour = calendar.get(Calendar.HOUR_OF_DAY)
+        var hour = 0
 
         for (i in 0 until 24) {
             val tableRow = TableRow(requireContext())
@@ -64,10 +67,14 @@ class MainScreenFragment : Fragment() {
             )
 
             val timeColumn = TextView(requireContext())
-            timeColumn.text = timeFormat.format(hour, 0, hour.plus(1), 0)
+            timeColumn.text = timeFormat.format(hour, 0, (++hour) % 24, 0)
+            timeColumn.setPadding(8, 0, 8, 8)
             tableRow.addView(timeColumn, 0)
 
-            hour = hour.plus(1)
+            val linearLayout = LinearLayout(requireContext())
+            linearLayout.orientation = LinearLayout.VERTICAL
+            linearLayout.visibility = View.VISIBLE
+            tableRow.addView(linearLayout, 1)
 
             binding.eventsTable.addView(tableRow, i)
         }
@@ -75,18 +82,33 @@ class MainScreenFragment : Fragment() {
 
     private fun getEvents(startTime: Long) {
         clearTable()
+        binding.scrollView.scrollTo(0, 0)
+        val endOfDay = startTime + (1000 * 60 * 60 * 24)
+
         viewModel.getEvents(startTime).observe(viewLifecycleOwner) { list ->
             list?.let {
                 for (i in list.indices) {
-                    val time = SimpleDateFormat("HH", Locale.getDefault()).format(list[i].startTime)
-                    val calendar = Calendar.getInstance()
-                    calendar.set(Calendar.HOUR_OF_DAY, time.toInt())
-                    val pos = calendar.get(Calendar.HOUR_OF_DAY)
+                    var start = if (list[i].startTime >= startTime) list[i].startTime else startTime
+                    var finish = if (list[i].finishTime <= endOfDay) list[i].finishTime else endOfDay
 
-                    val tableRow = binding.eventsTable.getChildAt(pos) as TableRow
-                    tableRow.addView(
-                        getEventCard(list[i], tableRow).root
-                    )
+                    while (start < finish) {
+                        var pos = SimpleDateFormat("HH", Locale.getDefault()).format(start).toInt()
+                        val tableRow = binding.eventsTable.getChildAt(pos) as TableRow
+
+                        val layout = tableRow.getChildAt(1) as LinearLayout
+                        val params = TableRow.LayoutParams(
+                            TableRow.LayoutParams.WRAP_CONTENT,
+                            TableRow.LayoutParams.WRAP_CONTENT
+                        )
+                        layout.layoutParams = params
+                        layout.setPadding(0, 0, 0, 0)
+
+                        layout.addView(
+                            getEventCard(list[i], tableRow).root
+                        )
+                        start += 1000 * 60 * 60
+                        ++pos
+                    }
                 }
             }
         }
@@ -113,7 +135,7 @@ class MainScreenFragment : Fragment() {
     private fun clearTable() {
         for (i in 0 until binding.eventsTable.childCount) {
             val row = (binding.eventsTable.getChildAt(i) as TableRow)
-            row.removeViews(1, row.childCount - 1)
+            (row.getChildAt(1) as LinearLayout).removeAllViews()
         }
     }
 }
