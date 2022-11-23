@@ -12,7 +12,7 @@ import com.ermilova.android.diary.MyApplication
 import com.ermilova.android.diary.databinding.FragmentDetailsBinding
 import com.ermilova.android.diary.domain.usecase.GetEventByIdUseCase
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 class DetailsScreenFragment : DialogFragment() {
 
@@ -24,26 +24,33 @@ class DetailsScreenFragment : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
         val bundle = arguments
         bundle?.let {
             val args = DetailsScreenFragmentArgs.fromBundle(bundle)
-
-            viewModel.getEvent(args.eventId).observe(viewLifecycleOwner) { event ->
-                binding.eventName.text = event.name
-                binding.eventStartTime.text = SimpleDateFormat("dd.MM.yyyy HH.mm", Locale.getDefault()).format(event.startTime)
-                binding.eventFinishTime.text = SimpleDateFormat("dd.MM.yyyy HH.mm", Locale.getDefault()).format(event.finishTime)
-                binding.eventDescription.text = event.description
+            if (viewModel.event.value?.id != args.eventId) {
+                viewModel.setId(args.eventId)
             }
         }
+
+        viewModel.event.observe(viewLifecycleOwner) { event ->
+            binding.eventName.text = event.name
+            binding.eventStartTime.text = SimpleDateFormat("dd.MM.yyyy HH.mm", Locale.getDefault()).format(event.startTime)
+            binding.eventFinishTime.text = SimpleDateFormat("dd.MM.yyyy HH.mm", Locale.getDefault()).format(event.finishTime)
+            binding.eventDescription.text = event.description
+        }
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.closeBtn.setOnClickListener() {
             findNavController().navigateUp()
         }
-
-        return binding.root
     }
 
     override fun onStart() {

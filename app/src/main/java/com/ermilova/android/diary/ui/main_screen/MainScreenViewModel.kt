@@ -1,11 +1,23 @@
 package com.ermilova.android.diary.ui.main_screen
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
+import com.ermilova.android.diary.domain.EventModel
 import com.ermilova.android.diary.domain.usecase.GetEventsByTimeUseCase
 
 class MainScreenViewModel(private val getEventsByTimeUseCase: GetEventsByTimeUseCase) : ViewModel() {
 
-    fun getEvents(startTime: Long) = getEventsByTimeUseCase(startTime).asLiveData()
+    private var _currentDate = MutableLiveData<Long>()
+    val currentDate: LiveData<Long>
+        get() {
+            return _currentDate
+        }
+
+    val events: LiveData<List<EventModel>?> = currentDate.switchMap { startTime ->
+        getEventsByTimeUseCase(startTime).asLiveData()
+    }
+
+    fun setCurrentDate(date: Long) {
+        _currentDate.value = date
+    }
 
 }

@@ -12,8 +12,9 @@ interface EventDao {
     suspend fun insert(eventEntity: EventEntity)
 
     @Query("SELECT * FROM events WHERE " +
-            "start_time BETWEEN :startTime and :finishTime " +
-            "or finish_time BETWEEN :startTime and :finishTime")
+            "(start_time BETWEEN :startTime and :finishTime " +
+            "or finish_time BETWEEN :startTime and :finishTime) " +
+            " or (start_time <= :startTime and finish_time >= :finishTime)")
     fun getAllByTime(startTime: Long, finishTime: Long): Flow<List<EventEntity>?>
 
     @Query("SELECT * FROM events WHERE id = :eventId")

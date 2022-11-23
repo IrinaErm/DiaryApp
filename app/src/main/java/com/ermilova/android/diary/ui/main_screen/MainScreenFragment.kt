@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.CalendarView
+import android.widget.TableLayout
+import android.widget.TableRow
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,8 +18,8 @@ import com.ermilova.android.diary.databinding.FragmentMainScreenBinding
 import com.ermilova.android.diary.domain.EventModel
 import com.ermilova.android.diary.domain.usecase.GetEventsByTimeUseCase
 import java.text.SimpleDateFormat
-import java.util.*
-
+import java.util.Calendar
+import java.util.Locale
 
 class MainScreenFragment : Fragment() {
 
@@ -27,11 +31,25 @@ class MainScreenFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMainScreenBinding.inflate(layoutInflater, container, false)
 
         drawTable()
-        getEvents(binding.calendar.date)
+        if (viewModel.currentDate.value == null) {
+            viewModel.setCurrentDate(
+                Calendar.getInstance().also { calendar ->
+                    calendar.set(Calendar.HOUR_OF_DAY, 0)
+                    calendar.set(Calendar.MINUTE, 0)
+                    calendar.set(Calendar.SECOND, 0)
+                    calendar.set(Calendar.MILLISECOND, 0)
+                }.timeInMillis
+            )
+        } else {
+            binding.calendar.date = viewModel.currentDate.value!!
+        }
+        viewModel.events.observe(viewLifecycleOwner) { list ->
+            showEvents(list)
+        }
 
         return binding.root
     }
@@ -41,18 +59,29 @@ class MainScreenFragment : Fragment() {
 
         binding.calendar.setOnDateChangeListener(
             CalendarView.OnDateChangeListener { view, year, month, day ->
-                val calendar = Calendar.getInstance()
-                calendar.set(Calendar.YEAR, year)
-                calendar.set(Calendar.MONTH, month)
-                calendar.set(Calendar.DAY_OF_MONTH, day)
-                calendar.set(Calendar.HOUR_OF_DAY, 0)
-                calendar.set(Calendar.MINUTE, 0)
-                calendar.set(Calendar.SECOND, 0)
-                calendar.set(Calendar.MILLISECOND, 0)
-                val startTime = calendar.timeInMillis
-
-                getEvents(startTime)
+                viewModel.setCurrentDate(
+                    Calendar.getInstance().also { calendar ->
+                        calendar.set(Calendar.YEAR, year)
+                        calendar.set(Calendar.MONTH, month)
+                        calendar.set(Calendar.DAY_OF_MONTH, day)
+                        calendar.set(Calendar.HOUR_OF_DAY, 0)
+                        calendar.set(Calendar.MINUTE, 0)
+                        calendar.set(Calendar.SECOND, 0)
+                        calendar.set(Calendar.MILLISECOND, 0)
+                    }.timeInMillis
+                )
             })
+
+        binding.addBtn.setOnClickListener {
+            viewModel.currentDate.value?.let { date ->
+                val action =
+                    MainScreenFragmentDirections.actionMainScreenFragmentToAddEventScreenFragment(
+                        date
+                    )
+                findNavController().navigate(action)
+            }
+
+        }
     }
 
     private fun drawTable() {
@@ -80,35 +109,36 @@ class MainScreenFragment : Fragment() {
         }
     }
 
-    private fun getEvents(startTime: Long) {
+    private fun showEvents(list: List<EventModel>?) {
         clearTable()
         binding.scrollView.scrollTo(0, 0)
-        val endOfDay = startTime + (1000 * 60 * 60 * 24)
+        val startTime = viewModel.currentDate.value!!
+        val endOfDay = viewModel.currentDate.value!! + (1000 * 60 * 60 * 24)
 
-        viewModel.getEvents(startTime).observe(viewLifecycleOwner) { list ->
-            list?.let {
-                for (i in list.indices) {
-                    var start = if (list[i].startTime >= startTime) list[i].startTime else startTime
-                    var finish = if (list[i].finishTime <= endOfDay) list[i].finishTime else endOfDay
+        list?.let {
+            for (i in list.indices) {
+                var start = if (list[i].startTime >= startTime) list[i].startTime else startTime
+                var finish =
+                    if (list[i].finishTime <= endOfDay) list[i].finishTime else endOfDay
 
-                    while (start < finish) {
-                        var pos = SimpleDateFormat("HH", Locale.getDefault()).format(start).toInt()
-                        val tableRow = binding.eventsTable.getChildAt(pos) as TableRow
+                while (start < finish) {
+                    var pos =
+                        SimpleDateFormat("HH", Locale.getDefault()).format(start).toInt()
+                    val tableRow = binding.eventsTable.getChildAt(pos) as TableRow
 
-                        val layout = tableRow.getChildAt(1) as LinearLayout
-                        val params = TableRow.LayoutParams(
-                            TableRow.LayoutParams.WRAP_CONTENT,
-                            TableRow.LayoutParams.WRAP_CONTENT
-                        )
-                        layout.layoutParams = params
-                        layout.setPadding(0, 0, 0, 0)
+                    val layout = tableRow.getChildAt(1) as LinearLayout
+                    val params = TableRow.LayoutParams(
+                        TableRow.LayoutParams.WRAP_CONTENT,
+                        TableRow.LayoutParams.WRAP_CONTENT
+                    )
+                    layout.layoutParams = params
+                    layout.setPadding(0, 0, 0, 0)
 
-                        layout.addView(
-                            getEventCard(list[i], tableRow).root
-                        )
-                        start += 1000 * 60 * 60
-                        ++pos
-                    }
+                    layout.addView(
+                        getEventCard(list[i], tableRow).root
+                    )
+                    start += 1000 * 60 * 60
+                    ++pos
                 }
             }
         }

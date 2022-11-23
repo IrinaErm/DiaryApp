@@ -15,6 +15,9 @@
             app:destination="@id/detailsFragment"
             app:popUpTo="@id/mainScreenFragment">
         </action>
+        <action
+            android:id="@+id/action_mainScreenFragment_to_addEventScreenFragment"
+            app:destination="@id/addEventScreenFragment" />
     </fragment>
     <dialog
         android:id="@+id/detailsFragment"
@@ -23,6 +26,17 @@
         tools:layout="@layout/fragment_details">
         <argument
             android:name="event_id"
+            app:argType="long"
+            app:nullable="false">
+        </argument>
+    </dialog>
+    <dialog
+        android:id="@+id/addEventScreenFragment"
+        android:name="com.ermilova.android.diary.ui.add_event_screen.AddEventScreenFragment"
+        android:label="fragment_add_event_screen"
+        tools:layout="@layout/fragment_add_event_screen">
+        <argument
+            android:name="date"
             app:argType="long"
             app:nullable="false">
         </argument>
