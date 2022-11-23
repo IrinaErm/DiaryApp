@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/add_event_screen_padding"
+        tools:context=".ui.add_event_screen.AddEventScreenFragment">
+
+        <TextView
+            android:id="@+id/screen_title"
+            style="@style/AddEventTitleTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/add_event"
+            android:textAlignment="center"
+            android:textSize="@dimen/event_info_title_textsize_large"
+            app:layout_constraintBottom_toTopOf="@id/event_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/event_name"
+            style="@style/EventInfoTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:hint="@string/name"
+            app:layout_constraintBottom_toTopOf="@id/event_start_time_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/screen_title"
+            android:maxLength="50"
+            android:inputType="text"/>
+
+        <TextView
+            android:id="@+id/event_start_time_label"
+            style="@style/EventInfoLabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_time"
+            app:layout_constraintBottom_toTopOf="@id/event_start_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_name" />
+
+        <EditText
+            android:id="@+id/event_start_time"
+            style="@style/EventInfoTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/event_description"
+            app:layout_constraintEnd_toStartOf="@id/event_finish_time"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_start_time_label"
+            android:textIsSelectable="true"
+            android:focusable="false"
+            android:inputType="none"/>
+
+        <TextView
+            android:id="@+id/event_finish_time_label"
+            style="@style/EventInfoLabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/finish_time"
+            app:layout_constraintBottom_toTopOf="@id/event_finish_time"
+            app:layout_constraintStart_toStartOf="@id/event_finish_time"
+            app:layout_constraintTop_toTopOf="@id/event_start_time_label"/>
+
+        <EditText
+            android:id="@+id/event_finish_time"
+            style="@style/EventInfoTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@id/event_start_time"
+            app:layout_constraintBottom_toBottomOf="@id/event_start_time"
+            app:layout_constraintTop_toTopOf="@id/event_start_time"
+            android:textIsSelectable="true"
+            android:focusable="false"
+            android:inputType="none"/>
+
+        <EditText
+            android:id="@+id/event_description"
+            style="@style/EventInfoTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/event_description_height"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            android:hint="@string/description"
+            android:gravity="top"
+            android:maxLength="140"
+            app:layout_constraintBottom_toTopOf="@id/add_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_start_time" />
+
+        <Button
+            android:id="@+id/cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/cancel_btn"
+            android:text="@string/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/add_btn"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/add_btn" />
+
+        <Button
+            android:id="@+id/add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cancel_btn"
+            app:layout_constraintTop_toBottomOf="@id/event_description" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

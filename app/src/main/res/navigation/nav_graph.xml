@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainScreenFragment">
+
+    <fragment
+        android:id="@+id/mainScreenFragment"
+        android:name="com.ermilova.android.diary.ui.main_screen.MainScreenFragment"
+        android:label="fragment_main_screen"
+        tools:layout="@layout/fragment_main_screen" >
+        <action
+            android:id="@+id/action_mainScreenFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:popUpTo="@id/mainScreenFragment">
+        </action>
+        <action
+            android:id="@+id/action_mainScreenFragment_to_addEventScreenFragment"
+            app:destination="@id/addEventScreenFragment"
+            app:popUpTo="@id/mainScreenFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/detailsFragment"
+        android:name="com.ermilova.android.diary.ui.details_screen.DetailsScreenFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="event_id"
+            app:argType="long"
+            app:nullable="false">
+        </argument>
+    </dialog>
+    <dialog
+        android:id="@+id/addEventScreenFragment"
+        android:name="com.ermilova.android.diary.ui.add_event_screen.AddEventScreenFragment"
+        android:label="fragment_add_event_screen"
+        tools:layout="@layout/fragment_add_event_screen">
+        <action
+            android:id="@+id/action_addEventScreenFragment_to_dateTimePickerFragment"
+            app:destination="@id/dateTimePickerFragment"
+            app:popUpTo="@id/addEventScreenFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/dateTimePickerFragment"
+        android:name="com.ermilova.android.diary.ui.add_event_screen.DateTimePickerFragment"
+        android:label="DateTimePickerFragment">
+        <argument
+            android:name="time_type"
+            app:argType="com.ermilova.android.diary.ui.add_event_screen.TimeType"
+            app:nullable="false">
+        </argument>
+    </dialog>
+</navigation>

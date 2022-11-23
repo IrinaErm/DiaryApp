@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_screen_padding">8dp</dimen>
+    <dimen name="details_screen_padding">16dp</dimen>
+    <dimen name="add_event_screen_padding">16dp</dimen>
+
+    <dimen name="btn_margin">8dp</dimen>
+
+    <dimen name="event_table_margin">16dp</dimen>
+    <dimen name="table_cell_padding">8dp</dimen>
+
+    <dimen name="event_cardview_margin">8dp</dimen>
+    <dimen name="event_cardview_padding">8dp</dimen>
+
+    <dimen name="event_info_textsize">9sp</dimen>
+    <dimen name="event_info_title_textsize">15sp</dimen>
+    <dimen name="event_info_textsize_large">14sp</dimen>
+    <dimen name="event_info_title_textsize_large">21sp</dimen>
+
+    <dimen name="event_description_height">100dp</dimen>
+    <dimen name="event_description_margin">16dp</dimen>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="EventInfoTextStyle">
+        <item name="android:fontFamily">@font/alike_angular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/event_info_textsize</item>
+    </style>
+
+    <style name="EventInfoTitleTextStyle" parent="EventInfoTextStyle">
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">@dimen/event_info_title_textsize</item>
+    </style>
+
+    <style name="EventInfoLabelTextStyle" parent="EventInfoTextStyle">
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:textColor">@color/label_text</item>
+    </style>
+
+    <style name="AddEventTitleTextStyle" parent="EventInfoTextStyle">
+        <item name="android:textColor">@color/label_text</item>
+        <item name="android:textSize">@dimen/event_info_title_textsize</item>
+    </style>
+</resources>
