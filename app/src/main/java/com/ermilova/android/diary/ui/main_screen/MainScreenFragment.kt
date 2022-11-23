@@ -18,7 +18,6 @@ import com.ermilova.android.diary.databinding.FragmentMainScreenBinding
 import com.ermilova.android.diary.domain.EventModel
 import com.ermilova.android.diary.domain.usecase.GetEventsByTimeUseCase
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Locale
 
 class MainScreenFragment : Fragment() {
@@ -35,17 +34,8 @@ class MainScreenFragment : Fragment() {
         binding = FragmentMainScreenBinding.inflate(layoutInflater, container, false)
 
         drawTable()
-        if (viewModel.currentDate.value == null) {
-            viewModel.setCurrentDate(
-                Calendar.getInstance().also { calendar ->
-                    calendar.set(Calendar.HOUR_OF_DAY, 0)
-                    calendar.set(Calendar.MINUTE, 0)
-                    calendar.set(Calendar.SECOND, 0)
-                    calendar.set(Calendar.MILLISECOND, 0)
-                }.timeInMillis
-            )
-        } else {
-            binding.calendar.date = viewModel.currentDate.value!!
+        viewModel.currentDate.value?.let { date ->
+            binding.calendar.date = date.timeInMillis
         }
         viewModel.events.observe(viewLifecycleOwner) { list ->
             showEvents(list)
@@ -59,27 +49,13 @@ class MainScreenFragment : Fragment() {
 
         binding.calendar.setOnDateChangeListener(
             CalendarView.OnDateChangeListener { view, year, month, day ->
-                viewModel.setCurrentDate(
-                    Calendar.getInstance().also { calendar ->
-                        calendar.set(Calendar.YEAR, year)
-                        calendar.set(Calendar.MONTH, month)
-                        calendar.set(Calendar.DAY_OF_MONTH, day)
-                        calendar.set(Calendar.HOUR_OF_DAY, 0)
-                        calendar.set(Calendar.MINUTE, 0)
-                        calendar.set(Calendar.SECOND, 0)
-                        calendar.set(Calendar.MILLISECOND, 0)
-                    }.timeInMillis
-                )
+                viewModel.setCurrentDate(year, month, day)
             })
 
         binding.addBtn.setOnClickListener {
-            viewModel.currentDate.value?.let { date ->
-                val action =
-                    MainScreenFragmentDirections.actionMainScreenFragmentToAddEventScreenFragment(
-                        date
-                    )
-                findNavController().navigate(action)
-            }
+            val action =
+                MainScreenFragmentDirections.actionMainScreenFragmentToAddEventScreenFragment()
+            findNavController().navigate(action)
 
         }
     }
@@ -112,16 +88,19 @@ class MainScreenFragment : Fragment() {
     private fun showEvents(list: List<EventModel>?) {
         clearTable()
         binding.scrollView.scrollTo(0, 0)
-        val startTime = viewModel.currentDate.value!!
-        val endOfDay = viewModel.currentDate.value!! + (1000 * 60 * 60 * 24)
+        val startTime = viewModel.currentDate.value!!.timeInMillis
+        val endOfDay = viewModel.currentDate.value!!.timeInMillis + (1000 * 60 * 60 * 24) - 1
 
         list?.let {
             for (i in list.indices) {
                 var start = if (list[i].startTime >= startTime) list[i].startTime else startTime
                 var finish =
                     if (list[i].finishTime <= endOfDay) list[i].finishTime else endOfDay
+                if (list[i].finishTime - 1 == startTime - 1) {
+                    continue
+                }
 
-                while (start < finish) {
+                while (start <= finish) {
                     var pos =
                         SimpleDateFormat("HH", Locale.getDefault()).format(start).toInt()
                     val tableRow = binding.eventsTable.getChildAt(pos) as TableRow

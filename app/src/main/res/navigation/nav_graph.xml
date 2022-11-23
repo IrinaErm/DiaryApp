@@ -17,7 +17,8 @@
         </action>
         <action
             android:id="@+id/action_mainScreenFragment_to_addEventScreenFragment"
-            app:destination="@id/addEventScreenFragment" />
+            app:destination="@id/addEventScreenFragment"
+            app:popUpTo="@id/mainScreenFragment" />
     </fragment>
     <dialog
         android:id="@+id/detailsFragment"
@@ -35,9 +36,18 @@
         android:name="com.ermilova.android.diary.ui.add_event_screen.AddEventScreenFragment"
         android:label="fragment_add_event_screen"
         tools:layout="@layout/fragment_add_event_screen">
+        <action
+            android:id="@+id/action_addEventScreenFragment_to_dateTimePickerFragment"
+            app:destination="@id/dateTimePickerFragment"
+            app:popUpTo="@id/addEventScreenFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/dateTimePickerFragment"
+        android:name="com.ermilova.android.diary.ui.add_event_screen.DateTimePickerFragment"
+        android:label="DateTimePickerFragment">
         <argument
-            android:name="date"
-            app:argType="long"
+            android:name="time_type"
+            app:argType="com.ermilova.android.diary.ui.add_event_screen.TimeType"
             app:nullable="false">
         </argument>
     </dialog>

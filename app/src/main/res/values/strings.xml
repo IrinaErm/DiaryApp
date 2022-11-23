@@ -8,4 +8,6 @@
     <string name="description">Description</string>
     <string name="name">Name</string>
     <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="invalid_input_error">Invalid time interval or event name.</string>
 </resources>

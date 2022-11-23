@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class EventModel(
     @SerializedName("id")
-    val id: Long?,
+    val id: Long? = null,
     @SerializedName("name")
     val name: String,
     @SerializedName("date_start")
@@ -12,5 +12,5 @@ data class EventModel(
     @SerializedName("date_finish")
     val finishTime: Long,
     @SerializedName("description")
-    val description: String?
+    val description: String? = null
 )
