@@ -1,8 +1,9 @@
 package com.ermilova.android.diary.data.room
 
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class EventLocalDataSource(private val eventDao: EventDao) {
+class EventLocalDataSource @Inject constructor(private val eventDao: EventDao) {
     suspend fun addEvent(event: EventEntity) {
         eventDao.insert(event)
     }

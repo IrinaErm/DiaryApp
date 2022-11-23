@@ -11,8 +11,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.ermilova.android.diary.utils.Result
 import java.util.Calendar
+import javax.inject.Inject
 
-class AddEventScreenViewModel(private val addEventUseCase: AddEventUseCase) : ViewModel() {
+class AddEventScreenViewModel @Inject constructor(private val addEventUseCase: AddEventUseCase) : ViewModel() {
 
     private var _startTime = MutableLiveData<Long>()
     val startTime: LiveData<Long>

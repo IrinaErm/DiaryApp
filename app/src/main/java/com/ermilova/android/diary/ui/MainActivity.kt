@@ -7,6 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.ermilova.android.diary.MyApplication
 import com.ermilova.android.diary.databinding.ActivityMainBinding
 import com.ermilova.android.diary.domain.EventModel
+import com.ermilova.android.diary.domain.EventRepo
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -15,13 +16,17 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.io.InputStream
 import java.nio.charset.Charset
+import javax.inject.Inject
 
 private const val jsonFile = "events.json"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    @Inject
+    lateinit var eventRepo: EventRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (applicationContext as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -55,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         for (event in events) {
             lifecycle.coroutineScope.launch {
                 withContext(Dispatchers.IO) {
-                    (requireNotNull(application) as MyApplication).eventRepo.addEvent(event)
+                   eventRepo.addEvent(event)
                 }
             }
         }

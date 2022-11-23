@@ -4,8 +4,9 @@ import androidx.lifecycle.*
 import com.ermilova.android.diary.domain.EventModel
 import com.ermilova.android.diary.domain.usecase.GetEventsByTimeUseCase
 import java.util.Calendar
+import javax.inject.Inject
 
-class MainScreenViewModel(private val getEventsByTimeUseCase: GetEventsByTimeUseCase) :
+class MainScreenViewModel @Inject constructor(private val getEventsByTimeUseCase: GetEventsByTimeUseCase) :
     ViewModel() {
 
     private var _currentDate = MutableLiveData<Calendar>()

@@ -3,8 +3,9 @@ package com.ermilova.android.diary.ui.details_screen
 import androidx.lifecycle.*
 import com.ermilova.android.diary.domain.EventModel
 import com.ermilova.android.diary.domain.usecase.GetEventByIdUseCase
+import javax.inject.Inject
 
-class DetailsScreenViewModel(private val getEventByIdUseCase: GetEventByIdUseCase) : ViewModel() {
+class DetailsScreenViewModel @Inject constructor(private val getEventByIdUseCase: GetEventByIdUseCase) : ViewModel() {
 
     private var _eventId = MutableLiveData<Long>()
     val event: LiveData<EventModel> = _eventId.switchMap { id ->

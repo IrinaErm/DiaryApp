@@ -1,24 +1,29 @@
 package com.ermilova.android.diary.ui.details_screen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ermilova.android.diary.MyApplication
 import com.ermilova.android.diary.databinding.FragmentDetailsBinding
-import com.ermilova.android.diary.domain.usecase.GetEventByIdUseCase
+import com.ermilova.android.diary.utils.ViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.Locale
+import javax.inject.Inject
 
 class DetailsScreenFragment : DialogFragment() {
 
     private lateinit var binding: FragmentDetailsBinding
-    private val viewModel: DetailsScreenViewModel by activityViewModels {
-        DetailsScreenViewModelFactory(GetEventByIdUseCase((requireNotNull(activity).application as MyApplication).eventRepo))
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory<DetailsScreenViewModel>
+
+    private val viewModel: DetailsScreenViewModel by viewModels {
+        viewModelFactory
     }
 
     override fun onCreateView(
@@ -51,6 +56,11 @@ class DetailsScreenFragment : DialogFragment() {
         binding.closeBtn.setOnClickListener() {
             findNavController().navigateUp()
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().applicationContext as MyApplication).appComponent.detailsScreenComponent().create().inject(this)
     }
 
     override fun onStart() {

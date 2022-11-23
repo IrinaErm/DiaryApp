@@ -1,5 +1,6 @@
 package com.ermilova.android.diary.ui.main_screen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,21 +11,25 @@ import android.widget.TableRow
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ermilova.android.diary.MyApplication
 import com.ermilova.android.diary.databinding.EventsListItemBinding
 import com.ermilova.android.diary.databinding.FragmentMainScreenBinding
 import com.ermilova.android.diary.domain.EventModel
-import com.ermilova.android.diary.domain.usecase.GetEventsByTimeUseCase
+import com.ermilova.android.diary.utils.ViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.Locale
+import javax.inject.Inject
 
 class MainScreenFragment : Fragment() {
 
     private lateinit var binding: FragmentMainScreenBinding
-    private val viewModel: MainScreenViewModel by activityViewModels {
-        MainScreenViewModelFactory(GetEventsByTimeUseCase((requireNotNull(activity).application as MyApplication).eventRepo))
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory<MainScreenViewModel>
+
+    private val viewModel: MainScreenViewModel by viewModels {
+        viewModelFactory
     }
 
     override fun onCreateView(
@@ -58,6 +63,11 @@ class MainScreenFragment : Fragment() {
             findNavController().navigate(action)
 
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().applicationContext as MyApplication).appComponent.mainScreenComponent().create().inject(this)
     }
 
     private fun drawTable() {
@@ -116,7 +126,7 @@ class MainScreenFragment : Fragment() {
                     layout.addView(
                         getEventCard(list[i], tableRow).root
                     )
-                    start += 1000 * 60 * 60
+                    start += 1000 * 60 * 60 + 1
                     ++pos
                 }
             }

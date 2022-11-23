@@ -1,5 +1,6 @@
 package com.ermilova.android.diary.ui.add_event_screen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,18 +10,24 @@ import android.widget.CalendarView
 import android.widget.NumberPicker
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ermilova.android.diary.MyApplication
 import com.ermilova.android.diary.databinding.FragmentDateTimePickerBinding
-import com.ermilova.android.diary.domain.usecase.AddEventUseCase
+import com.ermilova.android.diary.utils.ViewModelFactory
 import java.util.Calendar
+import javax.inject.Inject
 
 class DateTimePickerFragment : DialogFragment() {
 
     private lateinit var binding: FragmentDateTimePickerBinding
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory<AddEventScreenViewModel>
+
     private val viewModel: AddEventScreenViewModel by activityViewModels {
-        AddEventScreenViewModelFactory(AddEventUseCase((requireNotNull(activity).application as MyApplication).eventRepo))
+        viewModelFactory
     }
+
     private lateinit var timeType: TimeType
     private lateinit var time: Calendar
 
@@ -79,6 +86,11 @@ class DateTimePickerFragment : DialogFragment() {
 
             findNavController().navigateUp()
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().applicationContext as MyApplication).appComponent.dateTimePickerComponent().create().inject(this)
     }
 
     private fun initPickers() {

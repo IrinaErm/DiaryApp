@@ -6,8 +6,9 @@ import com.ermilova.android.diary.utils.toEntity
 import com.ermilova.android.diary.utils.toModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class EventRepoImpl(private val localDataSource: EventLocalDataSource) : EventRepo {
+class EventRepoImpl @Inject constructor(private val localDataSource: EventLocalDataSource) : EventRepo {
     override suspend fun addEvent(event: EventModel) {
         localDataSource.addEvent(event.toEntity())
     }

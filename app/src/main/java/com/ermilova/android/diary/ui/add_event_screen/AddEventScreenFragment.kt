@@ -1,5 +1,6 @@
 package com.ermilova.android.diary.ui.add_event_screen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,17 +12,21 @@ import androidx.navigation.fragment.findNavController
 import com.ermilova.android.diary.MyApplication
 import com.ermilova.android.diary.R
 import com.ermilova.android.diary.databinding.FragmentAddEventScreenBinding
-import com.ermilova.android.diary.domain.usecase.AddEventUseCase
 import com.ermilova.android.diary.utils.Result
+import com.ermilova.android.diary.utils.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.Locale
+import javax.inject.Inject
 
 class AddEventScreenFragment : DialogFragment() {
 
     private lateinit var binding: FragmentAddEventScreenBinding
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory<AddEventScreenViewModel>
+
     private val viewModel: AddEventScreenViewModel by activityViewModels {
-        AddEventScreenViewModelFactory(AddEventUseCase((requireNotNull(activity).application as MyApplication).eventRepo))
+        viewModelFactory
     }
 
     override fun onCreateView(
@@ -77,6 +82,11 @@ class AddEventScreenFragment : DialogFragment() {
                 )
             findNavController().navigate(action)
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().applicationContext as MyApplication).appComponent.addEventScreenComponent().create().inject(this)
     }
 
     override fun onStart() {
